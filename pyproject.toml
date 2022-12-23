@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "web-endfy"
+version = "0.1.0"
+description = "Python package to access ENDF files on the web"
+authors = ["Georg Schnabel"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "web_endfy"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.28.1"
+bs4 = "^0.0.1"
+logging = "^0.4.9.6"
+pandas = "^1.5.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
