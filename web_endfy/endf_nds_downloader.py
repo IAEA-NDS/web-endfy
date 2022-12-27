@@ -42,9 +42,10 @@ class EndfNDSDownloader:
         retdf = pd.concat(df_list, axis=0, ignore_index=True)
         # probably because of some NaN values
         # the charge column is not cast into integer but float
-        # so make sure it is an integer
-        retdf['charge'] = retdf['charge'].astype(pd.Int64Dtype())
-        retdf['mass'] = retdf['mass'].astype(pd.Int64Dtype())
+        # so make sure it is an integer and convert NaN values to -1
+        for colname in ('charge', 'mass'):
+            retdf.loc[retdf[colname].isna(), colname] = -1
+            retdf[colname] = retdf[colname].astype(int)
         self._isotope_dt = retdf
         return self._isotope_dt.copy()
 
