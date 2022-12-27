@@ -12,24 +12,24 @@ import pandas as pd
 import re
 
 
-def create_nds_library_list(cache_dir=None):
+def create_nds_library_list(cache_dir=None, trafo_cache_ext=None):
     nds_library_list = []
-    nds_library_list.extend(create_jendl_library_list(cache_dir))
-    nds_library_list.extend(create_jeff_library_list(cache_dir))
-    nds_library_list.extend(create_tendl_library_list(cache_dir))
-    nds_library_list.extend(create_endfb_library_list(cache_dir))
-    nds_library_list.extend(create_fendl_library_list(cache_dir))
-    nds_library_list.extend(create_irdff_library_list(cache_dir))
-    nds_library_list.extend(create_cendl_library_list(cache_dir))
-    nds_library_list.extend(create_brond_rosfond_library_list(cache_dir))
-    nds_library_list.extend(create_iaea_pd_library_list(cache_dir))
+    nds_library_list.extend(create_jendl_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_jeff_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_tendl_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_endfb_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_fendl_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_irdff_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_cendl_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_brond_rosfond_library_list(cache_dir, trafo_cache_ext))
+    nds_library_list.extend(create_iaea_pd_library_list(cache_dir, trafo_cache_ext))
     return nds_library_list
 
 
-def get_nds_library_df(cache_dir=None):
+def get_nds_library_df(cache_dir=None, trafo_cache_ext=None):
 
     library_db = []
-    nds_library_list = create_nds_library_list(cache_dir)
+    nds_library_list = create_nds_library_list(cache_dir, trafo_cache_ext)
     for curlib in nds_library_list:
         libspec = curlib.get_library_designation()
         m = re.match('^(.*)_(.*)$', libspec)
