@@ -9,9 +9,7 @@ def create_tendl2008_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2008/{sublib}/',
                 libspec=f'tendl2008_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2008_list
@@ -25,9 +23,7 @@ def create_tendl2009_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2009/{sublib}/',
                 libspec=f'tendl2009_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2009_list
@@ -41,9 +37,7 @@ def create_tendl2010_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2010/{sublib}/',
                 libspec=f'tendl2010_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2010_list
@@ -57,9 +51,7 @@ def create_tendl2011_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2011/{sublib}/',
                 libspec=f'tendl2011_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2011_list
@@ -73,9 +65,7 @@ def create_tendl2012_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2012/{sublib}/',
                 libspec=f'tendl2012_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2012_list
@@ -89,9 +79,7 @@ def create_tendl2014_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2014/{sublib}/',
                 libspec=f'tendl2014_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2014_list
@@ -105,9 +93,7 @@ def create_tendl2015_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2015/{sublib}/',
                 libspec=f'tendl2015_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)_(?P<mat>[0-9]+)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2015_list
@@ -121,9 +107,7 @@ def create_tendl2017_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2017/{sublib}/',
                 libspec=f'tendl2017_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2017_list
@@ -137,9 +121,7 @@ def create_tendl2019_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2019/{sublib}/',
                 libspec=f'tendl2019_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)_(?P<mat>[0-9]+)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2019_list
@@ -153,9 +135,7 @@ def create_tendl2021_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'TENDL-2021/{sublib}/',
                 libspec=f'tendl2021_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)_(?P<mat>[0-9]+)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return tendl2021_list
