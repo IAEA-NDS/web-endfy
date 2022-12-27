@@ -6,8 +6,12 @@ import os
 
 class EndfNDSDownloader:
 
-    def __init__(self, cache_dir=None, trafo=None, print_cache_info=True):
+    def __init__(
+        self, cache_dir=None, trafo=None, trafo_cache_ext=None,
+        print_cache_info=True
+    ):
         self._trafo = trafo
+        self._trafo_cache_ext = trafo_cache_ext
         self._library_dt = None
         self._isotope_dt = None
         if cache_dir is None:
@@ -20,7 +24,7 @@ class EndfNDSDownloader:
     def get_library_dt(self):
         if self._library_dt is None:
             self._library_dt = get_nds_library_df(
-                self._cache_dir
+                self._cache_dir, self._trafo_cache_ext
             )
         return self._library_dt
 
