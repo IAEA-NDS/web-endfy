@@ -16,7 +16,7 @@ class EndfArchiveDownloader(object):
 
     def __init__(self, liburl=None, libpath=None, libspec=None,
                  rex=None, dtypes=None, cache_dir=None,
-                 use_nds_prefix=True, trafo=None,
+                 use_nds_prefix=True, trafo=None, trafo_cache_ext=None,
                  encoding='utf-8'):
         self.__liburl = None
         self.__libpath = None
@@ -50,6 +50,7 @@ class EndfArchiveDownloader(object):
         self.__dtypes = dtypes
         self.__encoding = encoding
         self.__trafo = trafo
+        self.__trafo_cache_ext = trafo_cache_ext
         if cache_dir is not None:
             self.__cachedir = os.path.join(cache_dir, self.__libspec)
         else:
@@ -138,15 +139,34 @@ class EndfArchiveDownloader(object):
         if trafo is None:
             trafo = self.__trafo
         endf_file = self._determine_endf_file_using_criteria(**criteria)
-        endf_cont = fetch_file_from_cachedir(self.__cachedir, endf_file)
-        if endf_cont is None:
-            endf_cont = self._retrieve_endf_file(endf_file)
-            store_file_in_cachedir(self.__cachedir, endf_file, endf_cont)
-        endf_cont = endf_cont.decode(self.__encoding)
-        if callable(trafo):
-            return trafo(endf_cont)
-        else:
+        if not callable(trafo):
+            endf_cont = fetch_file_from_cachedir(self.__cachedir, endf_file)
+            if endf_cont is None:
+                endf_cont = self._retrieve_endf_file(endf_file)
+                store_file_in_cachedir(self.__cachedir, endf_file, endf_cont)
+            endf_cont = endf_cont.decode(self.__encoding)
             return endf_cont
+        # trafo is a function
+        else:
+            trafo_cont = None
+            if self.__trafo_cache_ext is not None:
+                trafo_endf_file = endf_file + self.__trafo_cache_ext
+                trafo_cont = fetch_file_from_cachedir(
+                    self.__cachedir, trafo_endf_file, use_pickle=True
+                )
+            if trafo_cont is None:
+                endf_cont = fetch_file_from_cachedir(self.__cachedir, endf_file)
+                if endf_cont is None:
+                    endf_cont = self._retrieve_endf_file(endf_file)
+                    store_file_in_cachedir(self.__cachedir, endf_file, endf_cont)
+                endf_cont = endf_cont.decode(self.__encoding)
+                trafo_cont = trafo(endf_cont)
+                if self.__trafo_cache_ext is not None:
+                    store_file_in_cachedir(
+                        self.__cachedir, trafo_endf_file,
+                        trafo_cont, use_pickle=True
+                    )
+            return trafo_cont
 
     def get_isotope_dt(self):
         infodt = self._provide_libinfo_dt()
