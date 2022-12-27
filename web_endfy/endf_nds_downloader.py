@@ -1,5 +1,6 @@
 from .nds_library_archive import get_nds_library_df
 import pandas as pd
+from appdirs import user_cache_dir
 from copy import deepcopy
 import os
 
@@ -15,8 +16,9 @@ class EndfNDSDownloader:
         self._library_dt = None
         self._isotope_dt = None
         if cache_dir is None:
-            package_folder = os.path.dirname(__file__)
-            cache_dir = os.path.join(package_folder, 'endflib_cache')
+            # package_folder = os.path.dirname(__file__)
+            # cache_dir = os.path.join(package_folder, 'endflib_cache')
+            cache_dir = user_cache_dir('web_endfy', 'gschnabel')
         self._cache_dir = cache_dir
         if print_cache_info:
             print(f'Using the directory {self._cache_dir} as cache for ENDF files')
