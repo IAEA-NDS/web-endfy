@@ -30,12 +30,3 @@ def fetch_zipfile_content(url, fname=None, encoding=None):
                 ' zip file or provide fname option')
         fcont = archive.read(members[0])
     return fcont if encoding is None else fcont.decode(encoding)
-
-
-def extract_info_from_string(string, rex):
-    r = re.compile(rex)
-    m = r.match(string)
-    if not m:
-        return None
-    else:
-        return m.groupdict()

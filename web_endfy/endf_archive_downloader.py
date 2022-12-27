@@ -4,11 +4,15 @@ import io
 from .web_utils import (
     fetch_links,
     fetch_zipfile_content,
-    extract_info_from_string
 )
 from .cache_utils import (
     fetch_file_from_cachedir,
     store_file_in_cachedir
+)
+from .link_info_extraction import (
+    extract_info_from_string,
+    determine_rex_and_dtypes_from_links,
+    convert_using_dtypes
 )
 
 
@@ -36,18 +40,6 @@ class EndfArchiveDownloader(object):
             raise ValueError('Please provide the library specification')
 
         self.__infodt = None
-        if rex is None:
-            rex = (r'^(?P<projectile>p)_(?P<mat>[0-9]+)_' +
-                   r'(?P<charge>[0-9]+)-' +
-                   r'(?P<element>[A-Za-z]+)-'
-                   r'(?P<mass>[0-9]+)')
-            dtypes = {'mat': int, 'charge': int,
-                      'element': lambda x: str(x).title(),
-                      'mass': int}
-        if dtypes is None:
-            dtypes = {}
-        self.__rex = rex
-        self.__dtypes = dtypes
         self.__encoding = encoding
         self.__trafo = trafo
         self.__trafo_cache_ext = trafo_cache_ext
@@ -56,23 +48,44 @@ class EndfArchiveDownloader(object):
         else:
             self.__cachedir = None
 
+        if rex is None:
+            rex_spec = fetch_file_from_cachedir(
+                self.__cachedir, 'rex_spec_info.pkl', use_pickle=True
+            )
+            if rex_spec is None:
+                links, _ = self._fetch_links_or_files()
+                rex_spec = determine_rex_and_dtypes_from_links(links)
+                store_file_in_cachedir(
+                    self.__cachedir, 'rex_spec_info.pkl', rex_spec,
+                    use_pickle=True
+                )
+            rex = rex_spec['rex']
+            dtypes = rex_spec['dtypes']
+
+        if dtypes is None:
+            dtypes = {}
+        self.__rex = rex
+        self.__dtypes = dtypes
+
     def _get_isotope_info_from_filename(self, filename):
         r = extract_info_from_string(filename, self.__rex)
         if r is None:
             return None
-        r = {k: v if k not in self.__dtypes
-             else self.__dtypes[k](v)
-             for k, v in r.items()}
+        r = convert_using_dtypes(r, self.__dtypes)
         r['filename'] = filename
         return r
 
-    def _fetch_lib_info(self):
+    def _fetch_links_or_files(self):
         if self.__liburl is not None:
             links = fetch_links(self.__liburl)
             sourcepaths = [self.__liburl + '/' + l for l in links]
         elif self.__libpath is not None:
             links = os.listdir(self.__libpath)
             sourcepaths = [os.path.join(self.__libpath, l) for l in links]
+        return links, sourcepaths
+
+    def _fetch_lib_info(self):
+        links, sourcepaths = self._fetch_links_or_files()
         records = []
         for lnk, sourcepath in zip(links, sourcepaths):
             finfo = self._get_isotope_info_from_filename(lnk)
@@ -101,11 +114,7 @@ class EndfArchiveDownloader(object):
             )
         else:
             csv_stream = io.StringIO(csvcont)
-            try:
-                self.__infodt = pd.read_csv(csv_stream)
-            except Exception:
-                print(self.__cachedir)
-                print(libinfo_cachefile)
+            self.__infodt = pd.read_csv(csv_stream)
         return self.__infodt.copy()
 
     def _retrieve_endf_file(self, endf_file):
