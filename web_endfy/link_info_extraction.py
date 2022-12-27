@@ -49,6 +49,14 @@ def generate_element_rex(
     return rex
 
 
+def generate_molecule_rex(
+    groupname, prefix='', suffix='', missing_allowed=False
+):
+    rex = prefix + f'(?P<{groupname}>[a-zA-Z0-9-()]+)' + suffix
+    rex = enable_missing_rex(rex, missing_allowed)
+    return rex
+
+
 def generate_mass_rex(
     groupname, prefix='', suffix='', missing_allowed=False
 ):
@@ -94,7 +102,8 @@ def determine_rex_and_dtypes_from_links(links):
         'projectile': 'str', 'charge': 'int',
         'element': 'titlecase',
         'mass': 'int_with_missing_as_zero',
-        'mat': 'int', 'level': 'str'
+        'mat': 'int', 'level': 'str',
+        'molecule': 'str'
     }
 
     candidates = [
@@ -106,7 +115,8 @@ def determine_rex_and_dtypes_from_links(links):
                     generate_mass_rex('mass', prefix='-', missing_allowed=True) +
                     generate_level_rex('level', missing_allowed=True) +
                     generate_final_suffix_rex()),
-            'dtypes': generic_dtypes
+            'dtypes': generic_dtypes,
+            'preference': 100
         },
         {
             'rex': (generate_projectile_rex('projectile', suffix='_') +
@@ -116,7 +126,24 @@ def determine_rex_and_dtypes_from_links(links):
                     generate_level_rex('level', missing_allowed=True) +
                     generate_material_rex('mat', prefix='_') +
                     generate_final_suffix_rex()),
-            'dtypes': generic_dtypes
+            'dtypes': generic_dtypes,
+            'preference': 100
+        },
+        {
+            'rex': (generate_projectile_rex('projectile', suffix='_') +
+                    generate_material_rex('mat', suffix='_') +
+                    generate_molecule_rex('element') +
+                    generate_final_suffix_rex()),
+            'dtypes': generic_dtypes,
+            'preference': 10
+        },
+        {
+            'rex': (generate_projectile_rex('projectile', suffix='_') +
+                    generate_molecule_rex('element', suffix='_') +
+                    generate_material_rex('mat') +
+                    generate_final_suffix_rex()),
+            'dtypes': generic_dtypes,
+            'preference': 10
         }
     ]
     match_score_list = []
@@ -132,12 +159,20 @@ def determine_rex_and_dtypes_from_links(links):
     max_score = max(match_score_list)
     max_idcs = [i for i, x in enumerate(match_score_list) if x == max_score]
     if max_score == 0:
+        print('no find')
         breakpoint()  # debug
         raise IndexError('did not find any matching links')
-    elif len(max_idcs) > 1:
-        raise IndexError(
-            'found multiple patterns that match the links equally well'
-        )
-    else:
+    elif len(max_idcs) == 1:
         max_idx = max_idcs[0]
-        return candidates[max_idx]
+    elif len(max_idcs) > 1:
+        prefs = [candidates[i]['preference'] for i in max_idcs]
+        max_pref = max(prefs)
+        pref_idcs = [i for i, p in enumerate(prefs) if p == max_pref]
+        if len(pref_idcs) > 1:
+            raise IndexError(
+                'found multiple patterns that match the links equally well' +
+                'with the same preference value'
+            )
+        max_idx = max_idcs[pref_idcs[0]]
+
+    return candidates[max_idx]
