@@ -1,4 +1,4 @@
-from .endf_archive_downloader import EndfArchiveDownloader
+from ..endf_archive_downloader import EndfArchiveDownloader
 
 
 iaea_pd_libraries_dict = {

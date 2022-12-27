@@ -1,4 +1,4 @@
-from web_endfy.nds_library_archive import get_nds_library_df
+from .nds_archive_sources.nds_library_archive import get_nds_library_df
 import pandas as pd
 from copy import deepcopy
 import os

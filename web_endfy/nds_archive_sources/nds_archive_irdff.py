@@ -1,4 +1,4 @@
-from .endf_archive_downloader import EndfArchiveDownloader
+from ..endf_archive_downloader import EndfArchiveDownloader
 
 
 irdff_libraries_dict = {

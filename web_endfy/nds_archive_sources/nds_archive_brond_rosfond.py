@@ -1,4 +1,4 @@
-from .endf_archive_downloader import EndfArchiveDownloader
+from ..endf_archive_downloader import EndfArchiveDownloader
 
 
 brond_rosfond_libraries_dict = {

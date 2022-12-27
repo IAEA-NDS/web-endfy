@@ -1,4 +1,3 @@
-from .endf_archive_downloader import EndfArchiveDownloader
 from .nds_archive_jendl import create_jendl_library_list
 from .nds_archive_jeff import create_jeff_library_list
 from .nds_archive_tendl import create_tendl_library_list
