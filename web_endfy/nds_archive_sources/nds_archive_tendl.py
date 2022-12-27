@@ -1,6 +1,3 @@
-from ..endf_archive_downloader import EndfArchiveDownloader
-
-
 tendl_libraries_dict = {
     'tendl2008': {
         'liburl': 'TENDL-2008',
@@ -46,20 +43,3 @@ tendl_libraries_dict = {
         'sublibs': ('d', 'g', 'he3', 'he4', 'n', 'p', 't')
     }
 }
-
-
-def create_tendl_library_list(cache_dir=None, trafo_cache_ext=None):
-    tendl_list = []
-    for curlibname, curlib in tendl_libraries_dict.items():
-        for cursublib in curlib['sublibs']:
-            liburl = curlib['liburl'] + '/' + cursublib + '/'
-            libspec = curlibname + '_' + cursublib
-            tendl_list.append(
-                EndfArchiveDownloader(
-                    liburl=liburl,
-                    libspec=libspec,
-                    cache_dir=cache_dir,
-                    trafo_cache_ext=trafo_cache_ext
-                )
-            )
-    return tendl_list

@@ -1,5 +1,3 @@
-from ..endf_archive_downloader import EndfArchiveDownloader
-
 jeff_libraries_dict = {
     'jef22': {
         'liburl': 'JEF-2.2',
@@ -26,20 +24,3 @@ jeff_libraries_dict = {
         'sublibs': ('decay', 'n', 'nfpy', 'sfpy', 'tsl')
     }
 }
-
-
-def create_jeff_library_list(cache_dir=None, trafo_cache_ext=None):
-    jeff_list = []
-    for curlibname, curlib in jeff_libraries_dict.items():
-        for cursublib in curlib['sublibs']:
-            liburl = curlib['liburl'] + '/' + cursublib + '/'
-            libspec = curlibname + '_' + cursublib
-            jeff_list.append(
-                EndfArchiveDownloader(
-                    liburl=liburl,
-                    libspec=libspec,
-                    cache_dir=cache_dir,
-                    trafo_cache_ext=trafo_cache_ext
-                )
-            )
-    return jeff_list

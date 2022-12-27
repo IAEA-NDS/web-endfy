@@ -1,6 +1,3 @@
-from ..endf_archive_downloader import EndfArchiveDownloader
-
-
 jendl_libraries_dict = {
     'jendl-pd-2016': {
         'liburl': 'JENDL-PD-2016',
@@ -44,20 +41,3 @@ jendl_libraries_dict = {
                     'nfpy', 'p', 'photo', 'sfpy', 'tsl')
     }
 }
-
-
-def create_jendl_library_list(cache_dir=None, trafo_cache_ext=None):
-    jendl_list = []
-    for curlibname, curlib in jendl_libraries_dict.items():
-        for cursublib in curlib['sublibs']:
-            liburl = curlib['liburl'] + '/' + cursublib + '/'
-            libspec = curlibname + '_' + cursublib
-            jendl_list.append(
-                EndfArchiveDownloader(
-                    liburl=liburl,
-                    libspec=libspec,
-                    cache_dir=cache_dir,
-                    trafo_cache_ext=trafo_cache_ext
-                )
-            )
-    return jendl_list

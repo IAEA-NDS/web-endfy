@@ -1,6 +1,3 @@
-from ..endf_archive_downloader import EndfArchiveDownloader
-
-
 endfb_libraries_dict = {
     'endfb70': {
         'liburl': 'ENDF-B-VII.0',
@@ -18,20 +15,3 @@ endfb_libraries_dict = {
                     'n', 'nfpy', 'p', 'photo', 'sfpy', 'std', 't', 'tsl')
     }
 }
-
-
-def create_endfb_library_list(cache_dir=None, trafo_cache_ext=None):
-    endfb_list = []
-    for curlibname, curlib in endfb_libraries_dict.items():
-        for cursublib in curlib['sublibs']:
-            liburl = curlib['liburl'] + '/' + cursublib + '/'
-            libspec = curlibname + '_' + cursublib
-            endfb_list.append(
-                EndfArchiveDownloader(
-                    liburl=liburl,
-                    libspec=libspec,
-                    cache_dir=cache_dir,
-                    trafo_cache_ext=trafo_cache_ext
-                )
-            )
-    return endfb_list
