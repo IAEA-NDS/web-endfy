@@ -9,9 +9,7 @@ def create_endfb70_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'ENDF-B-VII.0/{sublib}/',
                 libspec=f'endfb70_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     endfb70_list.append(
@@ -19,9 +17,7 @@ def create_endfb70_library_list(cache_dir, trafo_cache_ext):
             liburl=f'ENDF-B-VII.0/tsl/',
             libspec=f'endfb70_tsl',
             cache_dir=cache_dir,
-            trafo_cache_ext=trafo_cache_ext,
-            rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<element>[^.]+)',
-            dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+            trafo_cache_ext=trafo_cache_ext
         )
     )
     return endfb70_list
@@ -35,9 +31,7 @@ def create_endfb71_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'ENDF-B-VII.1/{sublib}/',
                 libspec=f'endfb71_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     endfb71_list.append(
@@ -45,9 +39,7 @@ def create_endfb71_library_list(cache_dir, trafo_cache_ext):
             liburl=f'ENDF-B-VII.1/tsl/',
             libspec=f'endfb71_tsl',
             cache_dir=cache_dir,
-            trafo_cache_ext=trafo_cache_ext,
-            rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<element>[^.]+)',
-            dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+            trafo_cache_ext=trafo_cache_ext
         )
     )
     return endfb71_list
@@ -61,9 +53,7 @@ def create_endfb80_library_list(cache_dir, trafo_cache_ext):
                 liburl=f'ENDF-B-VIII.0/{sublib}/',
                 libspec=f'endfb80_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)(?P<level>M?)',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     endfb80_list.append(
@@ -71,9 +61,7 @@ def create_endfb80_library_list(cache_dir, trafo_cache_ext):
             liburl=f'ENDF-B-VIII.0/tsl/',
             libspec=f'endfb80_tsl',
             cache_dir=cache_dir,
-            trafo_cache_ext=trafo_cache_ext,
-            rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<element>[^.]+)',
-            dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': int, 'mat': int, 'level': str}
+            trafo_cache_ext=trafo_cache_ext
         )
     )
     return endfb80_list
