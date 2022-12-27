@@ -9,9 +9,7 @@ def create_rosfond2010_library_list(cache_dir=None, trafo_cache_ext=None):
                 liburl=f'ROSFOND-2010/{sublib}/',
                 libspec=f'rosfond2010_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)(-(?P<mass>[0-9]+)(?P<level>M?))?',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': lambda x: int(x) if x is not None else 0, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return rosfond2010_list
@@ -25,9 +23,7 @@ def create_brond22_library_list(cache_dir=None, trafo_cache_ext=None):
                 liburl=f'BROND-2-2/{sublib}/',
                 libspec=f'brond22_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)(-(?P<mass>[0-9]+)(?P<level>M?))?',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': lambda x: int(x) if x is not None else 0, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return brond22_list
@@ -41,9 +37,7 @@ def create_brond31_library_list(cache_dir=None, trafo_cache_ext=None):
                 liburl=f'BROND-3.1/{sublib}/',
                 libspec=f'brond31_{sublib}',
                 cache_dir=cache_dir,
-                trafo_cache_ext=trafo_cache_ext,
-                rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)(-(?P<mass>[0-9]+)(?P<level>M?))?',
-                dtypes={'projectile': str, 'charge': int, 'element': lambda x: x.title(), 'mass': lambda x: int(x) if x is not None else 0, 'mat': int, 'level': str}
+                trafo_cache_ext=trafo_cache_ext
             )
         )
     return brond31_list
