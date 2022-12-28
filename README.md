@@ -47,9 +47,10 @@ nds_endf_dl.get_isotope_dt()
 The second instruction will take a couple of minutes as it accesses many
 websites in the NDS archive to determine the available ENDF files.
 The information of downloaded files is stored in a cache directory
-inside the `web-endfy` package directory and subsequent calls will
-retrieve the information from the cache directory, avoiding the slow
-download from the internet.
+whose location is determined by the [appdirs] package and printed out upon
+loading the `web-endfy` package.
+Subsequent calls will retrieve the information from the cache directory
+in order to avoid the slow download from the internet.
 The location of the cache directory can be adjusted
 by providing the `cache_dir` argument in the
 call to `EndfNDSDownloader()`:
@@ -92,6 +93,14 @@ endf_cont = nds_endf_dl.get_endf_file(
     charge=2, libname='jendl-pd-2016', trafo=parser.parse
 )
 ```
+If the execution of the `trafo` function takes a lot of time,
+its result can also be cached for faster subsequent retrievals.
+To enable the caching, provide the `trafo_cache_ext` argument
+while instantiating the `EndfNDSDownloader` class to specify
+the file extension for storing the transformed content:
+```python
+nds_endf_dl = EndfNDSDownloader(trafo_cache_ext='.trafo')
+```
 
 #### EndfArchiveDownloader
 
@@ -113,7 +122,7 @@ jeff_dl = EndfArchiveDownloader(
     rex='^(?P<projectile>[a-zA-Z0-9]+)_(?P<mat>[0-9]+)_' +
         '(?P<charge>[0-9]+)-(?P<element>[a-zA-Z]+)-(?P<mass>[0-9]+)',
     dtypes={
-        'projectile': str, 'charge': int, 'element': lambda x: x.title(),
+        'projectile': str, 'charge': int, 'element': 'titlecase',
         'mass': int, 'mat': int
     },
     use_nds_prefix=False,
@@ -133,10 +142,12 @@ will be used to create a column in a dataframe that contains the captured conten
 such as `n`, `p`, etc. The `dtypes` argument contains a dictionary that
 specifies to which type the matched string of each capture group should be cast
 before being stored in a dataframe. The keys are given by the names of the
-capture groups and the values are conversion functions.
+capture groups and the values are the names of conversion functions, e.g.
+`int`, `str`, and `titlecase`. Currently available conversion functions can be
+found at the beginning of the file `web-endf/link_info_extraction.py`.
 
 After creating the instance of the `EndfArchiveDownloader`, you can
-get a `pandas` dataframe listing all available ENDF files by
+obtain a `pandas` dataframe with a list of all available ENDF files by
 ```python
 jeff_dl.get_isotope_dt()
 ```
@@ -149,10 +160,23 @@ As for the `EndfNDSDownloader` class, you can also
 provide a `trafo` argument with a function to transform
 the string representation of the ENDF file to something else.
 
+In contrast to the `EndfNDSDownloader` class, downloaded files
+are not cached by default. To enable caching, specify the
+cache directory via the `cache_dir` argument. If you have specified
+a transformation and want results to be cached, too, you need to
+provide the `trafo_cache_ext` argument as well:
+```python
+jeff_dl = EndfNDSDownloader(
+   ...
+   cache_dir='mycache',
+   trafo_cache_ext='.parsed'
+)
+```
 
 [public-archive]: https://nds.iaea.org/public/download-endf/
 [endf-parserpy]: https://github.com/iaea-nds/endf-parserpy.git
 [public-archive-jeff33-neutron]: https://nds.iaea.org/public/download-endf/JEFF-3.3/n/
+[appdirs]: https://github.com/ActiveState/appdirs 
 
 ### Legal note
 
