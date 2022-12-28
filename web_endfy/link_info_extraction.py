@@ -159,8 +159,6 @@ def determine_rex_and_dtypes_from_links(links):
     max_score = max(match_score_list)
     max_idcs = [i for i, x in enumerate(match_score_list) if x == max_score]
     if max_score == 0:
-        print('no find')
-        breakpoint()  # debug
         raise IndexError('did not find any matching links')
     elif len(max_idcs) == 1:
         max_idx = max_idcs[0]
